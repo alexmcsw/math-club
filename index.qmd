@@ -1,0 +1,10 @@
+---
+title: "Math Club"
+author: "Alex McSween"
+format: revealjs
+---
+
+## Etc 
+
+Hiii
+
