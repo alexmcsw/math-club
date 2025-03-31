@@ -8,3 +8,88 @@ format: revealjs
 
 Hiii
 
+
+```{r}
+library(waffle)
+library(dplyr)
+library(tidyr)
+library(purrr)
+
+palette <- c(
+  "#e83e8c",
+  "#ffce67",
+  "#56cc9d",
+  "#f3969a"
+)
+```
+
+
+```{r}
+# Create timeline data
+
+career <- data.frame(
+    workplace = c("BSc", "MSc", "CMS", "StatCan"),
+    start_date = c("2015-09-01", "2019-05-01", "2021-08-31", "2022-05-01"),
+    end_date = c("2019-04-30", "2021-04-30", "2022-04-30", as.character(Sys.Date()))
+)  |>
+  mutate(
+    Date = map2(
+      as.Date(start_date),
+      as.Date(end_date),
+      seq,
+      by = "1 week"
+    ),
+    workplace = factor(workplace, levels = c("BSc", "MSc", "CMS", "StatCan"))
+  ) |>
+unnest(cols = c(Date)) |>
+group_by(workplace) |>
+mutate(
+    count = n()
+) |>
+select(-Date) |>
+distinct()
+
+
+```
+
+## My Career
+
+::: {.columns}
+
+::: {.column width="70%"}
+
+- School
+-
+
+:::
+
+::: {.column width="30%"}
+
+```{r}
+#| fig-height: 25
+
+
+ggplot(career) +
+geom_waffle(
+    aes(
+        fill = workplace,
+        values = count
+    ),
+    flip = TRUE,
+    color = "white",
+    size = 1
+) + 
+scale_x_discrete() + 
+scale_fill_manual(values = palette) +
+coord_equal() + 
+theme_minimal() 
+
+```
+
+:::
+
+:::
+
+
+
+
