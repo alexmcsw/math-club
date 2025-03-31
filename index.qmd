@@ -49,25 +49,88 @@ mutate(
 select(-Date) |>
 distinct()
 
+n_milestones <- 9
+
+y_values <- data.frame(
+  yend = c(
+    sample(5:10, n_milestones, replace = TRUE),
+    sample(11:15, n_milestones, replace = TRUE) - 10
+  ),
+  y = c(
+    sample(11:15, n_milestones, replace = TRUE),
+    sample(5:10, n_milestones, replace = TRUE) - 10
+  )
+) |> slice(sample(1:n(), n_milestones))
+
+
+milestones <- data.frame(
+  event = c(
+    "Tried python for first time",
+    "Learned R",
+    "Women in math club",
+    "R-Ladies",
+    "Turned down PhD funding",
+    "Started applying for jobs",
+    "Referred to the CMS",
+    "Started reaching out to friends on LinkedIn",
+    "Learned to use Linux"
+  ),
+  date = as.Date(
+    c(
+      "2017-06-01",
+      "2022-07-01",
+      "2018-09-01",
+      "2022-10-01",
+      "2021-09-01",
+      "2021-06-01",
+      "2021-08-01",
+      "2021-12-01",
+      "2021-10-01"
+    )
+  ),
+  career = c(
+    "BSc",
+    "StatCan", 
+    "BSc",
+    "StatCan",
+    "MSc",
+    "MSc",
+    "MSc",
+    "CMS",
+    "CMS"
+  ),
+  base_date = min(as.Date(career$start_date))
+) |> 
+  mutate(
+    Date = map2(
+      as.Date(base_date),
+      as.Date(date),
+      seq,
+      by = "1 week"
+    )
+  ) |>
+unnest(cols = c(Date)) |>
+group_by(event) |>
+mutate(
+    count = n() / 10
+) |>
+select(-Date, base_date) |>
+distinct() |>
+cbind(y_values)
+
 
 ```
 
 ## My Career
 
-::: {.columns}
-
-::: {.column width="70%"}
-
-- School
--
-
-:::
-
-::: {.column width="30%"}
+- BSc in pure mathematics from uOttawa
+- MSc in mathematics and statistics from uOttawa
+- IT Officer at the Canadian Mathematical Society
+- Data Scientist at StatCan
 
 ```{r}
-#| fig-height: 25
-
+#| fig-width: 20
+#| fig-align: center
 
 ggplot(career) +
 geom_waffle(
@@ -75,21 +138,166 @@ geom_waffle(
         fill = workplace,
         values = count
     ),
-    flip = TRUE,
     color = "white",
     size = 1
 ) + 
-scale_x_discrete() + 
 scale_fill_manual(values = palette) +
 coord_equal() + 
-theme_minimal() 
+theme_void() +
+theme(
+  legend.position = "bottom",
+  legend.title = element_blank()
+)
 
 ```
 
-:::
+## Undergrad {.smaller}
 
-:::
+```{r}
+
+ggplot(career) +
+geom_waffle(
+    aes(
+        fill = workplace,
+        values = count
+    ),
+    color = "white",
+    size = 1
+) + 
+scale_fill_manual(values = c(palette[1],"#c7c3c3","#c7c3c3", "#c7c3c3")) +
+coord_equal() + 
+xlim(0, 50) +
+ylim(-10, 20) +
+theme_void() +
+theme(
+  legend.position = "none"
+) +
+geom_segment(
+  data = milestones |> filter(career == "BSc"),
+  aes(
+    yend = yend,
+    y = y,
+    x = count
+  ),
+  linewidth = 1,
+  colour = "#6f42c1",
+  arrow = arrow(length = unit(0.03, "npc"))
+)
+```
 
 
+## MSc {.smaller}
+
+```{r}
+
+ggplot(career) +
+geom_waffle(
+    aes(
+        fill = workplace,
+        values = count
+    ),
+    color = "white",
+    size = 1
+) + 
+scale_fill_manual(values = c("#c7c3c3", palette[2], "#c7c3c3", "#c7c3c3")) +
+coord_equal() + 
+xlim(0, 50) +
+ylim(-10, 20) +
+theme_void() +
+theme(
+  legend.position = "none"
+) +
+geom_segment(
+  data = milestones |> filter(career == "MSc"),
+  aes(
+    yend = yend,
+    y = y,
+    x = count
+  ),
+  linewidth = 1,
+  colour = "#6f42c1",
+  arrow = arrow(length = unit(0.03, "npc"))
+)
+
+```
+
+## CMS {.smaller}
+
+```{r}
+ggplot(career) +
+geom_waffle(
+    aes(
+        fill = workplace,
+        values = count
+    ),
+    color = "white",
+    size = 1
+) + 
+scale_fill_manual(values = c("#c7c3c3", "#c7c3c3", palette[3],"#c7c3c3")) +
+coord_equal() + 
+theme_void() +
+theme(
+  legend.position = "none"
+) +
+geom_segment(
+  data = milestones |> filter(career == "CMS"),
+  aes(
+    yend = yend,
+    y = y,
+    x = count
+  ),
+  linewidth = 1,
+  colour = "#6f42c1",
+  arrow = arrow(length = unit(0.03, "npc"))
+) +
+xlim(0, 50) +
+ylim(-10, 20) 
+
+```
+
+## StatCan {.smaller}
+
+```{r}
+
+ggplot(career) +
+geom_waffle(
+    aes(
+        fill = workplace,
+        values = count
+    ),
+    color = "white",
+    size = 1
+) + 
+scale_fill_manual(values = c("#c7c3c3", "#c7c3c3", "#c7c3c3", palette[4])) +
+coord_equal() + 
+theme_void() +
+theme(
+  legend.position = "none"
+) +
+geom_segment(
+  data = milestones |> filter(career == "StatCan"),
+  aes(
+    yend = yend,
+    y = y,
+    x = count
+  ),
+  linewidth = 1,
+  colour = "#6f42c1",
+  arrow = arrow(length = unit(0.03, "npc"))
+) + 
+xlim(0, 50) +
+ylim(-10, 20)
+
+```
+
+## Population Projections
+
+- small area projections
+- mortality, life expectancy
+- National population projections
+  - cohort component projection
+  - preparation of components
+    - fertility,
+    - mortality
 
 

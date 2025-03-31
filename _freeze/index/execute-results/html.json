@@ -1,7 +1,7 @@
 {
-  "hash": "274ab0123fac9833aa96389990b73203",
+  "hash": "849c84b084019232494561eb9626cefd",
   "result": {
-    "markdown": "---\ntitle: \"Math Club\"\nauthor: \"Alex McSween\"\nformat: revealjs\n---\n\n\n## Etc \n\nHiii\n\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n\n## My Career\n\n::: {.columns}\n\n::: {.column width=\"70%\"}\n\n- School\n-\n\n:::\n\n::: {.column width=\"30%\"}\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](index_files/figure-revealjs/unnamed-chunk-3-1.png){width=960}\n:::\n:::\n\n\n:::\n\n:::\n\n\n\n\n",
+    "markdown": "---\ntitle: \"Math Club\"\nauthor: \"Alex McSween\"\nformat: revealjs\n---\n\n\n## Etc \n\nHiii\n\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n\n## My Career\n\n- BSc in pure mathematics from uOttawa\n- MSc in mathematics and statistics from uOttawa\n- IT Officer at the Canadian Mathematical Society\n- Data Scientist at StatCan\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![](index_files/figure-revealjs/unnamed-chunk-3-1.png){fig-align='center' width=1920}\n:::\n:::\n\n\n## Undergrad {.smaller}\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](index_files/figure-revealjs/unnamed-chunk-4-1.png){width=960}\n:::\n:::\n\n\n\n## MSc {.smaller}\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](index_files/figure-revealjs/unnamed-chunk-5-1.png){width=960}\n:::\n:::\n\n\n## CMS {.smaller}\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](index_files/figure-revealjs/unnamed-chunk-6-1.png){width=960}\n:::\n:::\n\n\n## StatCan {.smaller}\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](index_files/figure-revealjs/unnamed-chunk-7-1.png){width=960}\n:::\n:::\n\n\n## Population Projections\n\n- small area projections\n- mortality, life expectancy\n- National population projections\n  - cohort component projection\n  - preparation of components\n    - fertility,\n    - mortality\n\n\n",
     "supporting": [
       "index_files"
     ],
