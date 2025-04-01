@@ -21,6 +21,9 @@ palette <- c(
   "#56cc9d",
   "#f3969a"
 )
+
+set.seed(10)
+
 ```
 
 
@@ -49,55 +52,58 @@ mutate(
 select(-Date) |>
 distinct()
 
-n_milestones <- 9
+n_milestones <- 10
 
 y_values <- data.frame(
   yend = c(
-    sample(5:10, n_milestones, replace = TRUE),
-    sample(11:15, n_milestones, replace = TRUE) - 10
+    sample(0:10, n_milestones, replace = TRUE),
+    sample(12:20, n_milestones, replace = TRUE) - 10
   ),
   y = c(
-    sample(11:15, n_milestones, replace = TRUE),
-    sample(5:10, n_milestones, replace = TRUE) - 10
+    sample(22:30, n_milestones, replace = TRUE),
+    sample(-10:0, n_milestones, replace = TRUE) - 10
   )
 ) |> slice(sample(1:n(), n_milestones))
 
 
 milestones <- data.frame(
   event = c(
-    "Tried python for first time",
-    "Learned R",
-    "Women in math club",
-    "R-Ladies",
-    "Turned down PhD funding",
+    "Tried python\nfor first time",
+    "Women in math club",    
+    "Turned down\nPhD funding",
     "Started applying for jobs",
-    "Referred to the CMS",
-    "Started reaching out to friends on LinkedIn",
-    "Learned to use Linux"
+    "Started reaching out\nto friends on LinkedIn",
+    "Learned to use Linux",
+    "Developed Python skills",
+    "Tried (and failed) to\nlearn to say no to work",
+    "Learned R",
+    "R-Ladies"
   ),
   date = as.Date(
     c(
       "2017-06-01",
-      "2022-07-01",
-      "2018-09-01",
-      "2022-10-01",
+      "2018-09-01",      
       "2021-09-01",
       "2021-06-01",
-      "2021-08-01",
       "2021-12-01",
-      "2021-10-01"
+      "2021-10-01",
+      "2021-12-01",
+      "2022-02-01",
+      "2022-07-01",
+      "2022-10-01"
     )
   ),
   career = c(
     "BSc",
-    "StatCan", 
-    "BSc",
-    "StatCan",
+    "BSc",    
     "MSc",
-    "MSc",
-    "MSc",
+    "MSc",    
     "CMS",
-    "CMS"
+    "CMS",
+    "CMS",
+    "CMS",
+    "StatCan",
+    "StatCan"
   ),
   base_date = min(as.Date(career$start_date))
 ) |> 
@@ -116,7 +122,13 @@ mutate(
 ) |>
 select(-Date, base_date) |>
 distinct() |>
-cbind(y_values)
+cbind(y_values) |>
+mutate(
+  x_jitter = case_when(
+    sample(1:100, 1) %% 2 == 1 ~ min(45, max(5, count - (yend - y))),
+    .default = min(45, max(5, count + (yend - y)))
+  )
+)
 
 
 ```
@@ -167,7 +179,7 @@ geom_waffle(
 scale_fill_manual(values = c(palette[1],"#c7c3c3","#c7c3c3", "#c7c3c3")) +
 coord_equal() + 
 xlim(0, 50) +
-ylim(-10, 20) +
+ylim(-20, 30) +
 theme_void() +
 theme(
   legend.position = "none"
@@ -177,11 +189,20 @@ geom_segment(
   aes(
     yend = yend,
     y = y,
-    x = count
+    x = x_jitter,
+    xend = count
   ),
   linewidth = 1,
   colour = "#6f42c1",
   arrow = arrow(length = unit(0.03, "npc"))
+) +
+geom_label(
+data = milestones |> filter(career == "BSc"),
+  aes(
+    y = y,
+    x = x_jitter,
+    label = event
+  )
 )
 ```
 
@@ -202,7 +223,7 @@ geom_waffle(
 scale_fill_manual(values = c("#c7c3c3", palette[2], "#c7c3c3", "#c7c3c3")) +
 coord_equal() + 
 xlim(0, 50) +
-ylim(-10, 20) +
+ylim(-20, 30) +
 theme_void() +
 theme(
   legend.position = "none"
@@ -212,11 +233,20 @@ geom_segment(
   aes(
     yend = yend,
     y = y,
-    x = count
+    x = x_jitter,
+    xend = count
   ),
   linewidth = 1,
   colour = "#6f42c1",
   arrow = arrow(length = unit(0.03, "npc"))
+) +
+geom_label(
+data = milestones |> filter(career == "MSc"),
+  aes(
+    y = y,
+    x = x_jitter,
+    label = event
+  )
 )
 
 ```
@@ -244,14 +274,23 @@ geom_segment(
   aes(
     yend = yend,
     y = y,
-    x = count
+    x = x_jitter,
+    xend = count
   ),
   linewidth = 1,
   colour = "#6f42c1",
   arrow = arrow(length = unit(0.03, "npc"))
 ) +
 xlim(0, 50) +
-ylim(-10, 20) 
+ylim(-20, 30) +
+geom_label(
+data = milestones |> filter(career == "CMS"),
+  aes(
+    y = y,
+    x = x_jitter,
+    label = event
+  )
+)
 
 ```
 
@@ -279,14 +318,23 @@ geom_segment(
   aes(
     yend = yend,
     y = y,
-    x = count
+    x = x_jitter,
+    xend = count
   ),
   linewidth = 1,
   colour = "#6f42c1",
   arrow = arrow(length = unit(0.03, "npc"))
 ) + 
 xlim(0, 50) +
-ylim(-10, 20)
+ylim(-20, 30) +
+geom_label(
+data = milestones |> filter(career == "StatCan"),
+  aes(
+    y = y,
+    x = x_jitter,
+    label = event
+  )
+)
 
 ```
 
