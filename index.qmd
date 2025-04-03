@@ -4,6 +4,7 @@ author: "Alex McSween"
 format: 
   revealjs:
     incremental: true  
+    df-print: kable
 ---
 
 
@@ -446,12 +447,85 @@ data = milestones |> filter(career == "StatCan"),
 
 ## Population Projections
 
-- small area projections
-- mortality, life expectancy
-- National population projections
+- small area/population projections
+- mortality & life expectancy
+- National population projections:
   - cohort component projection
   - preparation of components
-    - fertility,
-    - mortality
+
+## Cohort component projection
+
+1. Begin in year $t_0$ with a base population $P_0$ disaggregated into cohorts
+  - cohorts can be age, gender, and/or region specific
+
+. . .
+
+```{r}
+
+data.frame(
+  Year = 2025,
+  Region = c("Ontario","Ontario", "Quebec", "Quebec"),
+  Gender = c("Men+", "Women+", "Men+", "Women+"),
+  "0" = sample(0:10, 4),
+  "1" = sample(0:10, 4),
+  "2" = sample(0:10, 4),
+  "3" = sample(0:10, 4),
+  "4" = sample(0:10, 4)
+)
+
+```
+
+## Cohort component projection
+
+2. Determine what will happen to the population over the course of the year in a mathematical way:
+  - compute (fertility, mortality, etc) rates for the interval $(t_0, t_0 + 1)$ per age, gender and region to represent the above 
+
+. . .
+
+```{r}
+
+data.frame(
+  Year = 2025,
+  Region = c("Ontario","Ontario", "Quebec", "Quebec"),
+  Gender = c("Men+", "Women+", "Men+", "Women+"),
+  "0" = round(runif(4),2),
+  "1" = round(runif(4),2),
+  "2" = round(runif(4),2),
+  "3" = round(runif(4),2),
+  "4" = round(runif(4),2)
+)
+
+```
+  
+## Cohort component projection
+
+3. Combine the above rates into a transition matrix $T^{a,g}$ for each age ($a$) and gender ($g$) cohort:
+- the diagonal is the net out-migration for a given region
+> ie. add the death rate, subtract the immigration rate, etc.
+- the off diagonal contains inter-regional migration rates only 
+> ie. $T^{a,g}_{i,j}$ contains the rate of migration from region $i$ to region $j$. 
+
+## Cohort component projection
+
+4. Compute the survival matrix
+
+. . .
+
+$$ S^{a,g} = \left(I - 0.5 * T^{a,g}\right)\left(I + 0.5 * T^{a,g}\right)^{-1}$$
+
+5. Multiply the base population by the survival matrices to obtain $P_1$.
+
+6. Repeat to end of projection
+
+
+
+
+
+
+## References
+
+- [Population Projections for Canada (2024 to 2074), Provinces and Territories (2024 to 2049): Technical Report on Methodology and Assumptions](https://www150.statcan.gc.ca/n1/pub/91-620-x/91-620-x2025001-eng.htm)
+- [Population Projections for Canada, Provinces and Territories: Interactive Dashboard](https://www150.statcan.gc.ca/n1/pub/71-607-x/71-607-x2022015-eng.htm)
+
 
 
