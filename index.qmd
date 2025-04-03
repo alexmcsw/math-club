@@ -1,12 +1,10 @@
 ---
 title: "Math Club"
 author: "Alex McSween"
-format: revealjs
+format: 
+  revealjs:
+    incremental: true   
 ---
-
-## Etc 
-
-Hiii
 
 
 ```{r}
@@ -22,7 +20,7 @@ palette <- c(
   "#f3969a"
 )
 
-set.seed(10)
+set.seed(8)
 
 ```
 
@@ -52,16 +50,16 @@ mutate(
 select(-Date) |>
 distinct()
 
-n_milestones <- 10
+n_milestones <- 8
 
 y_values <- data.frame(
   yend = c(
-    sample(0:10, n_milestones, replace = TRUE),
-    sample(12:20, n_milestones, replace = TRUE) - 10
+    sample(5:10, n_milestones, replace = TRUE),
+    sample(0:5, n_milestones, replace = TRUE)
   ),
   y = c(
-    sample(22:30, n_milestones, replace = TRUE),
-    sample(-10:0, n_milestones, replace = TRUE) - 10
+    sample(12:20, n_milestones, replace = TRUE),
+    sample(-10:-2, n_milestones, replace = TRUE)
   )
 ) |> slice(sample(1:n(), n_milestones))
 
@@ -70,25 +68,21 @@ milestones <- data.frame(
   event = c(
     "Tried python\nfor first time",
     "Women in math club",    
-    "Turned down\nPhD funding",
-    "Started applying for jobs",
+    "Finished courses",
+    "Turned down\nPhD funding &\nstarted applying for jobs",
     "Started reaching out\nto friends on LinkedIn",
-    "Learned to use Linux",
-    "Developed Python skills",
-    "Tried (and failed) to\nlearn to say no to work",
+    "Developed more\nprogramming skills",
     "Learned R",
     "R-Ladies"
   ),
   date = as.Date(
     c(
-      "2017-06-01",
-      "2018-09-01",      
-      "2021-09-01",
+      "2017-04-01",
+      "2017-09-01",
+      "2020-04-01",      
       "2021-06-01",
       "2021-12-01",
       "2021-10-01",
-      "2021-12-01",
-      "2022-02-01",
       "2022-07-01",
       "2022-10-01"
     )
@@ -96,10 +90,8 @@ milestones <- data.frame(
   career = c(
     "BSc",
     "BSc",    
+    "MSc", 
     "MSc",
-    "MSc",    
-    "CMS",
-    "CMS",
     "CMS",
     "CMS",
     "StatCan",
@@ -125,8 +117,8 @@ distinct() |>
 cbind(y_values) |>
 mutate(
   x_jitter = case_when(
-    sample(1:100, 1) %% 2 == 1 ~ min(45, max(5, count - (yend - y))),
-    .default = min(45, max(5, count + (yend - y)))
+    sample(1:100, 1) %% 2 == 1 ~ min(40, max(10, count - 3*(yend - y))),
+    .default = min(40, max(10, count + 3*(yend - y)))
   )
 )
 
@@ -139,6 +131,8 @@ mutate(
 - MSc in mathematics and statistics from uOttawa
 - IT Officer at the Canadian Mathematical Society
 - Data Scientist at StatCan
+
+. . .
 
 ```{r}
 #| fig-width: 20
@@ -179,7 +173,7 @@ geom_waffle(
 scale_fill_manual(values = c(palette[1],"#c7c3c3","#c7c3c3", "#c7c3c3")) +
 coord_equal() + 
 xlim(0, 50) +
-ylim(-20, 30) +
+ylim(-10, 20) +
 theme_void() +
 theme(
   legend.position = "none"
@@ -202,9 +196,41 @@ data = milestones |> filter(career == "BSc"),
     y = y,
     x = x_jitter,
     label = event
-  )
+  ),
+  colour = "#6f42c1",
+  size = 6
 )
 ```
+
+## Other Undergrad Activities {.smaller}
+
+::: {.columns}
+::: {.column}
+
+- CO-OP $\rightarrow$ Research Projects
+- Undergraduate conferences:
+  - CUMC: Canadian undergraduate mathematics conference
+  - DIM: Diversity in Math
+  - SUMM: Les séminaires universitaires en mathématiques à Montréal
+- Volunteering:
+  - women in math club
+  - Let's Talk Science
+  - Heart of the City Piano
+- Electives
+  - Women + Gender studies
+  - Arts courses
+
+:::
+::: {.column}
+
+::: {.fragment .fade-in}
+![women in math club](./static/wim.jpg)
+:::
+
+:::
+:::
+
+
 
 
 ## MSc {.smaller}
@@ -223,7 +249,7 @@ geom_waffle(
 scale_fill_manual(values = c("#c7c3c3", palette[2], "#c7c3c3", "#c7c3c3")) +
 coord_equal() + 
 xlim(0, 50) +
-ylim(-20, 30) +
+ylim(-10, 20) +
 theme_void() +
 theme(
   legend.position = "none"
@@ -246,10 +272,40 @@ data = milestones |> filter(career == "MSc"),
     y = y,
     x = x_jitter,
     label = event
-  )
+  ),
+  colour = "#6f42c1",
+  size = 6
 )
 
 ```
+
+## Other MSc Activities {.smaller}
+
+::: {.columns}
+::: {.column}
+
+- Covid?
+- Courses on communication for the sciences
+  - How to break down problems
+  - How to identify the important parts for an audience
+  - Explaining technical topics without technical terms
+- More women in math club!
+  - more engagement/support from professors
+  - Association for Women in Math
+- PIMS Math^Industry internships
+
+:::
+::: {.column}
+
+::: {.fragment .fade-in}
+![first PR](./static/first_PR.png)
+:::
+
+:::
+:::
+
+
+
 
 ## CMS {.smaller}
 
@@ -282,17 +338,26 @@ geom_segment(
   arrow = arrow(length = unit(0.03, "npc"))
 ) +
 xlim(0, 50) +
-ylim(-20, 30) +
+ylim(-10, 20) +
 geom_label(
 data = milestones |> filter(career == "CMS"),
   aes(
     y = y,
     x = x_jitter,
     label = event
-  )
+  ),
+  colour = "#6f42c1",
+  size = 6
 )
 
 ```
+## Other CMS Activities {.smaller}
+
+- Learned to use linux, python in a nonmathematical context
+- Learned to work with other people's code
+- Saw a bit of the less glamorous side of academia
+- Got to work on outreach projects with a real budget!
+
 
 ## StatCan {.smaller}
 
@@ -326,17 +391,53 @@ geom_segment(
   arrow = arrow(length = unit(0.03, "npc"))
 ) + 
 xlim(0, 50) +
-ylim(-20, 30) +
+ylim(-10, 20) +
 geom_label(
 data = milestones |> filter(career == "StatCan"),
   aes(
     y = y,
     x = x_jitter,
     label = event
-  )
+  ),
+  colour = "#6f42c1",
+  size = 6
 )
 
 ```
+
+## Other StatCan Activities {.smaller}
+
+::: {.columns}
+::: {.column}
+
+- A healthy Github presence/portfolio goes a long way
+- Networking after securing a job still matters!
+
+  > Innovation Division $\rightarrow$ Data Science Division $\rightarrow$ Centre for Demography
+
+- Volunteering still matters!
+  - RLadies
+
+
+:::
+::: {.column}
+
+::: {.fragment .fade-in}
+![RLadies](./static/RLadies.png)
+:::
+
+:::
+:::
+
+
+## In review...
+
+### Biggest impact for me
+
+- Networking + strong support system
+- Creating a varied and interesting CV
+- Finding something that motivates you
+- Learning on the job is possible but hard
 
 ## Population Projections
 
