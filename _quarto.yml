@@ -1,8 +1,11 @@
 format:
   revealjs:
-    logo: logo.png
-    footer: Alex McSween, 2025
+    logo: ./static/logo.png
+    footer: Alex McSween, Math club 2025
 project:
   output-dir: docs
 execute:
   freeze: auto
+theme:
+  - solarized
+  - brand
