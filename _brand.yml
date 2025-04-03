@@ -1,10 +1,27 @@
 color:
   palette:
-    dark-grey: "#222222"
-    blue: "#ddeaf1"
-  background: blue
-  foreground: dark-grey
-  primary: black
+    pink: "#BD338F"
+    orange: "#EB8252"
+    beige: "#F5DC83"
+    light-gray: "#CDD4DC"
+    gray: "#8098A2"
+    light-green: "#8FA33F"
+    green: "#5F7929" 
+    dark-green: "#014820"
+  background: white
+  foreground: pink
+  primary: dark-green
+  secondary: light-green
+  light: orange
+  dark: dark-gray
 
 logo: 
-  medium: logo.png
+  medium: ./static/logo.png
+
+typography:
+  headings:
+    color: dark
+
+
+
+  

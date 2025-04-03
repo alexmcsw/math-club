@@ -3,7 +3,7 @@ title: "Math Club"
 author: "Alex McSween"
 format: 
   revealjs:
-    incremental: true   
+    incremental: true  
 ---
 
 
@@ -12,12 +12,13 @@ library(waffle)
 library(dplyr)
 library(tidyr)
 library(purrr)
+library(ggpubr)
 
-palette <- c(
-  "#e83e8c",
-  "#ffce67",
-  "#56cc9d",
-  "#f3969a"
+palette = c(
+  "#EB8252",
+  "#BD338F",
+  "#F5DC83",
+  "#8FA33F"
 )
 
 set.seed(8)
@@ -134,7 +135,7 @@ mutate(
 
 . . .
 
-```{r}
+```{r, dev = "png", dev.args=list(bg="transparent")}
 #| fig-width: 20
 #| fig-align: center
 
@@ -149,7 +150,7 @@ geom_waffle(
 ) + 
 scale_fill_manual(values = palette) +
 coord_equal() + 
-theme_void() +
+theme_transparent() +
 theme(
   legend.position = "bottom",
   legend.title = element_blank()
@@ -159,7 +160,7 @@ theme(
 
 ## Undergrad {.smaller}
 
-```{r}
+```{r, dev = "png", dev.args=list(bg="transparent")}
 
 ggplot(career) +
 geom_waffle(
@@ -170,11 +171,11 @@ geom_waffle(
     color = "white",
     size = 1
 ) + 
-scale_fill_manual(values = c(palette[1],"#c7c3c3","#c7c3c3", "#c7c3c3")) +
+scale_fill_manual(values = c(palette[1],"#CDD4DC","#CDD4DC", "#CDD4DC")) +
 coord_equal() + 
 xlim(0, 50) +
 ylim(-10, 20) +
-theme_void() +
+theme_transparent() +
 theme(
   legend.position = "none"
 ) +
@@ -187,7 +188,7 @@ geom_segment(
     xend = count
   ),
   linewidth = 1,
-  colour = "#6f42c1",
+  colour = "#014820",
   arrow = arrow(length = unit(0.03, "npc"))
 ) +
 geom_label(
@@ -197,7 +198,7 @@ data = milestones |> filter(career == "BSc"),
     x = x_jitter,
     label = event
   ),
-  colour = "#6f42c1",
+  colour = "#014820",
   size = 6
 )
 ```
@@ -235,7 +236,7 @@ data = milestones |> filter(career == "BSc"),
 
 ## MSc {.smaller}
 
-```{r}
+```{r, dev = "png", dev.args=list(bg="transparent")}
 
 ggplot(career) +
 geom_waffle(
@@ -246,11 +247,11 @@ geom_waffle(
     color = "white",
     size = 1
 ) + 
-scale_fill_manual(values = c("#c7c3c3", palette[2], "#c7c3c3", "#c7c3c3")) +
+scale_fill_manual(values = c("#CDD4DC", palette[2], "#CDD4DC", "#CDD4DC")) +
 coord_equal() + 
 xlim(0, 50) +
 ylim(-10, 20) +
-theme_void() +
+theme_transparent() +
 theme(
   legend.position = "none"
 ) +
@@ -263,7 +264,7 @@ geom_segment(
     xend = count
   ),
   linewidth = 1,
-  colour = "#6f42c1",
+  colour = "#014820",
   arrow = arrow(length = unit(0.03, "npc"))
 ) +
 geom_label(
@@ -273,7 +274,7 @@ data = milestones |> filter(career == "MSc"),
     x = x_jitter,
     label = event
   ),
-  colour = "#6f42c1",
+  colour = "#014820",
   size = 6
 )
 
@@ -309,7 +310,7 @@ data = milestones |> filter(career == "MSc"),
 
 ## CMS {.smaller}
 
-```{r}
+```{r, dev = "png", dev.args=list(bg="transparent")}
 ggplot(career) +
 geom_waffle(
     aes(
@@ -319,9 +320,9 @@ geom_waffle(
     color = "white",
     size = 1
 ) + 
-scale_fill_manual(values = c("#c7c3c3", "#c7c3c3", palette[3],"#c7c3c3")) +
+scale_fill_manual(values = c("#CDD4DC", "#CDD4DC", palette[3],"#CDD4DC")) +
 coord_equal() + 
-theme_void() +
+theme_transparent() +
 theme(
   legend.position = "none"
 ) +
@@ -334,7 +335,7 @@ geom_segment(
     xend = count
   ),
   linewidth = 1,
-  colour = "#6f42c1",
+  colour = "#014820",
   arrow = arrow(length = unit(0.03, "npc"))
 ) +
 xlim(0, 50) +
@@ -346,7 +347,7 @@ data = milestones |> filter(career == "CMS"),
     x = x_jitter,
     label = event
   ),
-  colour = "#6f42c1",
+  colour = "#014820",
   size = 6
 )
 
@@ -372,9 +373,9 @@ geom_waffle(
     color = "white",
     size = 1
 ) + 
-scale_fill_manual(values = c("#c7c3c3", "#c7c3c3", "#c7c3c3", palette[4])) +
+scale_fill_manual(values = c("#CDD4DC", "#CDD4DC", "#CDD4DC", palette[4])) +
 coord_equal() + 
-theme_void() +
+theme_transparent() +
 theme(
   legend.position = "none"
 ) +
@@ -387,7 +388,7 @@ geom_segment(
     xend = count
   ),
   linewidth = 1,
-  colour = "#6f42c1",
+  colour = "#014820",
   arrow = arrow(length = unit(0.03, "npc"))
 ) + 
 xlim(0, 50) +
@@ -399,7 +400,7 @@ data = milestones |> filter(career == "StatCan"),
     x = x_jitter,
     label = event
   ),
-  colour = "#6f42c1",
+  colour = "#014820",
   size = 6
 )
 
