@@ -431,14 +431,18 @@ data = milestones |> filter(career == "StatCan"),
 :::
 
 
-## In review...
-
-### Biggest impact for me
+## In review... {.smaller}
 
 - Networking + strong support system
 - Creating a varied and interesting CV
-- Finding something that motivates you
 - Learning on the job is possible but hard
+- Finding something that motivates you
+
+::: {.fragment .fade-in}
+![Code challenge submission](./static/code-challenge.png){height=4in}
+:::
+
+
 
 ## Population Projections
 
