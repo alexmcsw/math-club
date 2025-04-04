@@ -153,7 +153,7 @@ scale_fill_manual(values = palette) +
 coord_equal() + 
 theme_transparent() +
 theme(
-  legend.position = "bottom",
+  legend.position = "None",
   legend.title = element_blank()
 )
 
